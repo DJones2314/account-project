@@ -54,16 +54,37 @@ public class AccountMapRepository implements AccountRepository{
 		Account account2 = util.getObjectForJSON(account1, null);
 		if(accountMap.containsKey(id)) {
 			accountMap.put(id, account2);
-			return "values have been changed";
+			return "values have been changed"; 
 		} else {
 			return "account does not exist";
 		}
 		
 	}
 
+	
+	public int getNumberFirstName(String firstName) {
+		String tmp = "";
+		int counter = 0;
+		
+		for (Account A : accountMap.values()) {
+			String accountToString = A.getFirstName().toString();
+			System.out.println(A.getFirstName());
+			if (A.getFirstName().equals(firstName)) {
+			accountToString += " ";
+			tmp += accountToString;
+			counter++;
+			}		
+		
+	
+		}
+		return counter;
+	}		
+		 
+		
 	@Override
 	public String getFirstName() {
-				return null;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -77,6 +98,8 @@ public class AccountMapRepository implements AccountRepository{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 	
 	
