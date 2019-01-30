@@ -79,30 +79,65 @@ public class AccountServiceTest {
 	@Test
 	public void accountConversionToJSONTestWithEmptyMap() {
 	
-	}
+		String jsonString = "{\"firstName\":\"dave\",\"lastName\":\"clayton\",\"accountNumber\":\"2847\"}"; 
+		Account test = util.getObjectForJSON(jsonString, Account.class);
+
+		
+		assertEquals("Not Worked","dave clayton 2847",test.getAccount());
+		
+		}
+		
+	
 	
 	@Test
 	public void accountConversionToJSONTestEmptyMapWithConversion() {
-	
+		int size = repo.accountMap.size();
+		
+		Account aAccount = new Account("josh", "jerry", 4321);
+		
+		String account = util.getJSONForObject(aAccount);
+		
+		repo.createAccount(account);
+		size = repo.accountMap.size();
+		assertEquals("success", size, repo.accountMap.size());
+		
+	 
 	}
 
 	@Test
 	public void accountConversionToJSONTest() {
+		Account anAccount = new Account("matt", "hores", 2468);
+		String account = util.getJSONForObject(anAccount);
+
 		
-	}
+		assertEquals("Worked","{\"firstName\":\"matt\",\"lastName\":\"hores\",\"accountNumber\":2468}", account.toString());
+	} 
 
 	@Test
 	public void getCountForFirstNamesInAccountWhenZeroOccurances() {
 		
+		assertEquals("test failed", 0, repo.getNumberFirstName("john"));
 	}
 	
 	@Test
 	public void getCountForFirstNamesInAccountWhenOne() {
-		
+		String jsonString = "{\"firstName\":\"dave\",\"lastName\":\"clayton\",\"accountNumber\":\"1234\"}";
+		String jsonString2 = "{\"firstName\":\"matt\",\"lastName\":\"hores\",\"accountNumber\":\"4321\"}";
+		repo.createAccount(jsonString);
+		repo.createAccount(jsonString2);
+		assertEquals("failed", 1 ,repo.getNumberFirstName("dave"));
 	}
 
 	@Test
 	public void getCountForFirstNamesInAccountWhenMult() {
+		
+		String jsonString = "{\"firstName\":\"dave\",\"lastName\":\"clayton\",\"accountNumber\":\"5432\"}";
+		String jsonString2 = "{\"firstName\":\"dave\",\"lastName\":\"hores\",\"accountNumber\":\"1234\"}";
+		String jsonString3 = "{\"firstName\":\"dave\",\"lastName\":\"well\",\"accountNumber\":\"2468\"}";
+		repo.createAccount(jsonString);
+		repo.createAccount(jsonString2);
+		repo.createAccount(jsonString3);
+		assertEquals("failed", 3 ,repo.getNumberFirstName("dave")); 
 		
 	}
 
